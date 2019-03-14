@@ -1,0 +1,32 @@
+<yandex>
+	<http_port>{{ clickhouse_http_port }}</http_port>
+	<tcp_port>{{ clickhouse_port }}</tcp_port>
+	<logger>
+		<level>trace</level>
+		<log>/var/log/clickhouse-server/clickhouse-server.log</log>
+		<errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+		<size>1000M</size>
+		<count>10</count>
+	</logger>
+	<zookeeper>
+		{% for server in groups['clickhouse'] %}
+			{% set j = loop.index | string %}
+			<node index="{{ j }}">
+				<host>{{ hostvars[server]['ansible_default_ipv4']['address'] }}</host>
+				<port>{{ zookeeper_port }}</port>
+			</node>
+		{% endfor %}
+	</zookeeper>
+	<remote_servers>
+		<logs>
+			<shard>
+				{% for server in groups['clickhouse'] %}
+					<replica>
+						<host>{{ hostvars[server]['ansible_default_ipv4']['address'] }}</host>
+						<port>{{ clickhouse_port }}</port>
+					</replica>
+				{% endfor %}
+			</shard>
+		</logs>
+	</remote_servers>
+</yandex>

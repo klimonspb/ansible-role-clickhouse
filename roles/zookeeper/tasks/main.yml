@@ -1,0 +1,7 @@
+---
+  - name: "Установка пакета zookeeperd"
+    apt:
+      name: zookeeperd
+      state: present
+    notify:
+      - "Запуск zookeeperd"

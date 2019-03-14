@@ -1,0 +1,4 @@
+---
+  zookeeper_port: 2181
+  clickhouse_port: 9000
+  clickhouse_http_port: 8123

@@ -1,33 +1,17 @@
 ---
-  - name: "Установка необходимых пакетов"
-    register: dirmngr_state
-    apt:
-      name: "{{ packages }}"
-      state: present
-    vars:
-      packages:
-      - dirmngr
-      - net-tools
-
   - name: "Добавление ключа репозитория clickhouse"
-    register: repokey_state
-    when: dirmngr_state|success
     apt_key:
       keyserver: keyserver.ubuntu.com
       id: E0C56BD4
       state: present
 
   - name: "Добавления репозитория clickhouse"
-    register: clickhouserepo_state
-    when: repokey_state|success
     apt_repository:
       repo: deb http://repo.yandex.ru/clickhouse/deb/stable/ main/
       state: present
-      filename: clickhoues
+      filename: clickhouse
 
   - name: "Установка клиента и сервера clickhouse"
-    register: clickhouseinstall_state
-    when: clickhouserepo_state|success
     apt:
       name: "{{ packages }}"
       state: present
@@ -35,3 +19,10 @@
       packages:
       - clickhouse-client
       - clickhouse-server
+
+  - name: "Развертывание конфигурации clickhouse"
+    template:
+      src: config.xml
+      dest: /etc/clickhouse-server/config.xml
+    notify:
+      - "Запуск clickhouse-server"

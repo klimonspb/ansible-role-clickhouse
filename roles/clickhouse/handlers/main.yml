@@ -1,0 +1,10 @@
+---
+  - name: "Запуск clickhouse-server"
+    systemd:
+      name: clickhouse-server
+      state: started
+
+  - name: "Перезапуск clickhouse-server"
+    systemd:
+      name: clickhouse-server
+      state: restarted
