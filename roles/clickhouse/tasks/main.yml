@@ -25,4 +25,4 @@
       src: config.xml
       dest: /etc/clickhouse-server/config.xml
     notify:
-      - "Запуск clickhouse-server"
+      - "Перезапуск clickhouse-server"

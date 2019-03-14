@@ -4,4 +4,4 @@
       name: zookeeperd
       state: present
     notify:
-      - "Запуск zookeeperd"
+      - "Перезапуск zookeeperd"
