@@ -1,10 +1,10 @@
 ---
   - name: "Запуск zookeeperd"
     systemd:
-      name: zookeeperd
+      name: zookeeper
       state: started
 
   - name: "Перезапуск zookeeperd"
     systemd:
-      name: zookeeperd
+      name: zookeeper
       state: restarted
